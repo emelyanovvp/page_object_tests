@@ -1,7 +1,7 @@
 from .base_page import BasePage
 from .locators import ProductPageLocators
 from selenium.webdriver.common.by import By
-
+from .locators import BasePageLocators
 class ProductPage(BasePage):
     def push_button_add_to_basket(self):
         button_add_to_basket = self.browser.find_element(*ProductPageLocators.BUTTON_ADD_TO_BASKET)
@@ -19,11 +19,13 @@ class ProductPage(BasePage):
         message_how_much_is_basket_total_element = self.browser.find_element(*ProductPageLocators.GETTING_MESSAGE_PRICE)
         message_how_much_is_basket_total = message_how_much_is_basket_total_element.text
         assert price_of_product == message_how_much_is_basket_total, "Price of product is not equal basket total"
-
-
     def should_not_be_success_message(self):
         assert self.is_not_element_present(*ProductPageLocators.GETTING_MESSAGE_NAME), \
             "Success message is presented, but should not be"
     def is_disappeared_after_adding_product_to_basket(self):
         assert  self.is_disappeared(*ProductPageLocators.GETTING_MESSAGE_NAME), \
             "Success message is presented, but should not be"
+    def guest_should_see_login_link_on_product_page(self):
+        assert  self.should_be_login_link(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
+    def guest_can_go_to_login_page_from_product_page(self):
+        assert  self.go_to_login_page(*BasePageLocators.LOGIN_LINK), "Can't go login page"
