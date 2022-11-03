@@ -1,25 +1,12 @@
 from .base_page import BasePage
-from selenium.common.exceptions import NoAlertPresentException
 from .locators import ProductPageLocators
 from selenium.webdriver.common.by import By
-import math
+
 class ProductPage(BasePage):
     def push_button_add_to_basket(self):
         button_add_to_basket = self.browser.find_element(*ProductPageLocators.BUTTON_ADD_TO_BASKET)
         button_add_to_basket.click()
-    def solve_quiz_and_get_code(self):
-        alert = self.browser.switch_to.alert
-        x = alert.text.split(" ")[2]
-        answer = str(math.log(abs((12 * math.sin(float(x))))))
-        alert.send_keys(answer)
-        alert.accept()
-        try:
-            alert = self.browser.switch_to.alert
-            alert_text = alert.text
-            print(f"Your code: {alert_text}")
-            alert.accept()
-        except NoAlertPresentException:
-            print("No second alert presented")
+        self.solve_quiz_and_get_code()
     def check_names_of_product(self):
         product_to_choose_element = self.browser.find_element(*ProductPageLocators.GETTING_NAME)
         product_to_choose = product_to_choose_element.text
@@ -34,6 +21,9 @@ class ProductPage(BasePage):
         assert price_of_product == message_how_much_is_basket_total, "Price of product is not equal basket total"
 
 
-
-
-
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.GETTING_MESSAGE_NAME), \
+            "Success message is presented, but should not be"
+    def is_disappeared_after_adding_product_to_basket(self):
+        assert  self.is_disappeared(*ProductPageLocators.GETTING_MESSAGE_NAME), \
+            "Success message is presented, but should not be"

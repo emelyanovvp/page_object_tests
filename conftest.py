@@ -5,7 +5,7 @@ import pytest
 def browser():
     browser = webdriver.Chrome()
     yield browser
-    browser.quit()
+    #browser.quit()#
 
 def pytest_addoption(parser):
     parser.addoption('--language', action='store', default="en",
