@@ -29,3 +29,9 @@ class ProductPage(BasePage):
         assert  self.should_be_login_link(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
     def guest_can_go_to_login_page_from_product_page(self):
         assert  self.go_to_login_page(*BasePageLocators.LOGIN_LINK), "Can't go login page"
+
+    def should_not_be_product_in_basket(self):
+        assert self.is_not_element_present(*BasketPageLocators.BASKET_CONTENT), "Product is presented, but should not be"
+
+    def should_be_text_that_basket_is_empty(self):
+        assert self.is_element_present(*BasketPageLocators.TEXT_BASKET_IS_EMPTY), "No text that basket is empty"
