@@ -2,6 +2,7 @@ from .base_page import BasePage
 from .locators import ProductPageLocators
 from selenium.webdriver.common.by import By
 from .locators import BasePageLocators
+from .pages.basket_page import BasketPage
 class ProductPage(BasePage):
     def push_button_add_to_basket(self):
         button_add_to_basket = self.browser.find_element(*ProductPageLocators.BUTTON_ADD_TO_BASKET)
