@@ -4,31 +4,31 @@ from .pages.base_page import BasePage
 from .pages.basket_page import BasketPage
 from .pages.login_page import LoginPage
 from selenium.common.exceptions import NoAlertPresentException
+
 @pytest.mark.need_review
-class TestUserAddToBasketFromProductPage() :
-    @pytest.fixture()
-    def setup(self):
+class TestUserAddToBasketFromProductPage :
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser):
         link = "http://selenium1py.pythonanywhere.com/en-gb/accounts/login/"
-        page = LoginPage(browser,link)
+        page = LoginPage(browser, link)
         page.open()
         page.register_new_user_and_go_to_main_page()
         main_page = BasePage(browser, browser.current_url)
         main_page.open()
         main_page.should_be_authorized_user()
-
-    def test_user_cant_see_success_message(self,browser):
+    def test_user_cant_see_success_message(self, browser):
         link = "http://selenium1py.pythonanywhere.com/en-gb/"
-        page = BasePage(browser, link)
+        page = BasePage(browser,link)
         page.open()
         page.should_not_be_success_message()
-    def test_user_can_add_product_to_basket(self,browser):
+    def test_user_can_add_product_to_basket(self, browser):
         link = "http://selenium1py.pythonanywhere.com/en-gb/"
         page = BasePage(browser, link)
         page.open()
         page.guest_can_add_product_to_basket()
 
 
-def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
+def test_guest_cant_see_product_in_basket_opened_from_product_page(self,browser):
     link = "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/"
     page = BasePage(browser, link)
     page.open()
