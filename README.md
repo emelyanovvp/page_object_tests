@@ -1,2 +1,2 @@
 # page_object_tests
-testing wth page object model
+testing Oscar Sandbox using page object model
